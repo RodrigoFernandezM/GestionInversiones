@@ -31,6 +31,7 @@ export const LS_DISPLAY_CURRENCY = 'gestion_inv_display_currency'
 export const LS_EUR_USD_RATE = 'gestion_inv_eur_usd_rate'
 export const LS_API_KEY = 'gestion_inv_twelve_data_key'
 export const LS_MANUAL_PRICES = 'gestion_inv_manual_prices'
+export const LS_NEWS_API_KEY = 'gestion_inv_news_api_key'
 
 // Tiempo mínimo entre actualizaciones de precio (ms) — respeta el rate limit gratuito
 export const PRICE_REFRESH_INTERVAL = 60_000

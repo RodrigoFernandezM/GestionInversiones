@@ -9,9 +9,10 @@ import TransactionForm from './components/TransactionForm'
 import ImportModal from './components/ImportModal'
 import SettingsModal from './components/SettingsModal'
 import HelpModal from './components/HelpModal'
+import StockAnalyzer from './components/StockAnalyzer'
 import { useTransactions } from './hooks/useTransactions'
 import { usePrices } from './hooks/usePrices'
-import { LS_MANUAL_PRICES, ASSET_TYPES } from './constants'
+import { LS_MANUAL_PRICES, LS_API_KEY, LS_NEWS_API_KEY, ASSET_TYPES } from './constants'
 import { toUsd } from './utils/calculations'
 import {
   derivePositions,
@@ -34,6 +35,7 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [showImport, setShowImport] = useState(false)
   const [showHelp, setShowHelp] = useState(false)
+  const [showAnalyzer, setShowAnalyzer] = useState(false)
   const [chartView, setChartView] = useState('type')
   const [filter, setFilter] = useState('all')
   const [statusFilter, setStatusFilter] = useState('all') // 'all' | 'open' | 'closed'
@@ -93,6 +95,15 @@ export default function App() {
     }
   }, [])
 
+  // API keys
+  const apiKeyTwelve = useMemo(() => {
+    return localStorage.getItem(LS_API_KEY) || ''
+  }, [])
+
+  const apiKeyNews = useMemo(() => {
+    return localStorage.getItem(LS_NEWS_API_KEY) || ''
+  }, [])
+
   const allocationSegments = useMemo(
     () =>
       chartView === 'type'
@@ -146,6 +157,7 @@ export default function App() {
         onRefresh={refresh}
         onOpenSettings={() => setShowSettings(true)}
         onOpenHelp={() => setShowHelp(true)}
+        onOpenAnalyzer={() => setShowAnalyzer(true)}
         loading={loading}
         lastRefresh={lastRefresh}
       />
@@ -346,6 +358,14 @@ export default function App() {
       )}
 
       {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+
+      {showAnalyzer && (
+        <StockAnalyzer
+          onClose={() => setShowAnalyzer(false)}
+          apiKeyTwelve={apiKeyTwelve}
+          apiKeyNews={apiKeyNews}
+        />
+      )}
     </div>
   )
 }

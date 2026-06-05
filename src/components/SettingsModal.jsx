@@ -1,15 +1,18 @@
 import { useState } from 'react'
 import { X, Key, Eye, EyeOff, Trash2, AlertTriangle } from 'lucide-react'
-import { LS_API_KEY, LS_TRANSACTIONS, LS_LAST_PRICES, LS_MANUAL_PRICES } from '../constants'
+import { LS_API_KEY, LS_NEWS_API_KEY, LS_TRANSACTIONS, LS_LAST_PRICES, LS_MANUAL_PRICES } from '../constants'
 
 export default function SettingsModal({ onClose, onClearAll }) {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem(LS_API_KEY) ?? '')
+  const [newsApiKey, setNewsApiKey] = useState(() => localStorage.getItem(LS_NEWS_API_KEY) ?? '')
   const [show, setShow] = useState(false)
+  const [showNews, setShowNews] = useState(false)
   const [saved, setSaved] = useState(false)
   const [confirmClear, setConfirmClear] = useState(false)
 
   function handleSave() {
     localStorage.setItem(LS_API_KEY, apiKey.trim())
+    localStorage.setItem(LS_NEWS_API_KEY, newsApiKey.trim())
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -55,6 +58,32 @@ export default function SettingsModal({ onClose, onClearAll }) {
               />
               <button type="button" onClick={() => setShow(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300">
                 {show ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
+          </div>
+
+          {/* NewsAPI Key */}
+          <div>
+            <label className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+              <Key size={13} />
+              API Key — NewsAPI
+            </label>
+            <p className="text-zinc-500 text-xs mb-3">
+              Opcional. Para obtener noticias en el analizador de acciones. Obtén una clave gratuita en{' '}
+              <a href="https://newsapi.org" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:underline">
+                newsapi.org
+              </a>.
+            </p>
+            <div className="relative">
+              <input
+                type={showNews ? 'text' : 'password'}
+                value={newsApiKey}
+                onChange={(e) => setNewsApiKey(e.target.value)}
+                placeholder="Introduce tu NewsAPI key…"
+                className="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-2.5 pr-10 text-sm text-white placeholder-zinc-500 outline-none focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500 transition-all"
+              />
+              <button type="button" onClick={() => setShowNews(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300">
+                {showNews ? <EyeOff size={15} /> : <Eye size={15} />}
               </button>
             </div>
           </div>

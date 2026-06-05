@@ -1,4 +1,4 @@
-import { RefreshCw, Settings, Plus, Upload, HelpCircle } from 'lucide-react'
+import { RefreshCw, Settings, Plus, Upload, HelpCircle, TrendingUp } from 'lucide-react'
 import { CURRENCIES } from '../constants'
 import { formatCurrency, formatPercent } from '../utils/formatters'
 
@@ -11,6 +11,7 @@ export default function Header({
   onRefresh,
   onOpenSettings,
   onOpenHelp,
+  onOpenAnalyzer,
   loading,
   lastRefresh,
 }) {
@@ -76,6 +77,14 @@ export default function Header({
             className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all disabled:opacity-50"
           >
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+          </button>
+
+          <button
+            onClick={onOpenAnalyzer}
+            title="Analizar acción"
+            className="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+          >
+            <TrendingUp size={16} />
           </button>
 
           <button
